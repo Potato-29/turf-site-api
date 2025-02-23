@@ -56,7 +56,6 @@ module.exports = {
             start_time,
             end_time,
             is_booked: false,
-            slot_id: uuidv4(),
           };
           slots.push(slotObj);
           currentTime = addMinutes(currentTime, slotDuration);
