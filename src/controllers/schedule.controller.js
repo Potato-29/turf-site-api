@@ -21,7 +21,7 @@ module.exports = {
       const id = req.params.id;
       const schedules = await getAllSchedules({
         turf_id: id,
-        date: { $gte: new Date().setUTCHours(0, 0, 0, 0) },
+        date: { $gte: new Date() },
       });
       responseHelper.success(res, "Success", schedules);
     } catch (error) {
@@ -49,10 +49,13 @@ module.exports = {
         const endTime = new Date(`${date}T${end}:00`);
 
         while (currentTime < endTime) {
-          let start_time = format(currentTime, "HH:mm");
-          let end_time = format(addMinutes(currentTime, slotDuration), "HH:mm");
+          let start_time = format(currentTime, "h:mm a");
+          let end_time = format(
+            addMinutes(currentTime, slotDuration),
+            "h:mm a"
+          );
           let slotObj = {
-            slot: `${start_time}-${end_time}`,
+            slot: `${start_time} - ${end_time}`,
             start_time,
             end_time,
             is_booked: false,
