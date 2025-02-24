@@ -3,6 +3,8 @@ import {
   controllerTemplate,
   routerTemplate,
   serviceTemplate,
+  schemaTemplate,
+  modelTemplate,
 } from "../helpers/resource-generator-templates.js";
 
 // Access command line arguments
@@ -27,6 +29,8 @@ const resourceName = args[0];
 let controller = controllerTemplate.replace(/<resourcename>/g, resourceName);
 let service = serviceTemplate.replace(/<resourcename>/g, resourceName);
 let router = routerTemplate.replace(/<resourcename>/g, resourceName);
+let schema = schemaTemplate.replace(/<resourcename>/g, resourceName);
+let model = modelTemplate.replace(/<resourcename>/g, resourceName);
 
 try {
   await fs.promises.writeFile(
@@ -42,6 +46,10 @@ try {
 
   await fs.promises.writeFile(`src/routes/${resourceName}.router.js`, router);
   console.log(`Created router file: ${resourceName}.routes.js`);
+  await fs.promises.writeFile(`src/schemas/${resourceName}.schema.js`, schema);
+  console.log(`Created schema file: ${resourceName}.schema.js`);
+  await fs.promises.writeFile(`src/models/${resourceName}.model.js`, model);
+  console.log(`Created model file: ${resourceName}.model.js`);
 } catch (err) {
   console.error("Error creating controller file:", err);
   process.exit(1);

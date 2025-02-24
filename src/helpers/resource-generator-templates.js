@@ -1,5 +1,7 @@
 const controllerTemplate = `const responseHelper = require("../helpers/http-responses");
 
+const {getAll, getById, create, update, remove} = require("../services/<resourcename>.service");
+
 module.exports = {
   GetAll: async (req, res, next) => {
     try {
@@ -90,4 +92,25 @@ router.delete("/:id", Delete);
 
 module.exports = router;`;
 
-module.exports = { controllerTemplate, serviceTemplate, routerTemplate };
+const schemaTemplate = `const mongoose = require("mongoose");
+
+const <resourcename>Schema = new mongoose.Schema({
+  // Define your schema fields here
+});
+
+module.exports = <resourcename>Schema;`;
+
+const modelTemplate = `const mongoose = require("mongoose");
+const <resourcename>Schema = require("../schemas/<resourcename>.schema");
+
+const <resourcename>Model = mongoose.model("<resourcename>", <resourcename>Schema);
+
+module.exports = <resourcename>Model;`;
+
+module.exports = {
+  controllerTemplate,
+  serviceTemplate,
+  routerTemplate,
+  schemaTemplate,
+  modelTemplate,
+};

@@ -6,10 +6,14 @@ const {
   CreateTurf,
   CompleteTurfOnboarding,
   Delete,
+  GetSchedulesByTurfId,
 } = require("../controllers/turf.controller");
 
 router.get("/", GetAllTurfs);
 router.get("/:id", GetById);
+
+router.get("/:id/schedules", GetSchedulesByTurfId);
+
 router.post("/", CreateTurf);
 router.put("/:id", CompleteTurfOnboarding);
 router.delete("/:id", Delete);

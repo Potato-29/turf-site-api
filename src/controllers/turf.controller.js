@@ -6,6 +6,7 @@ const {
   getById,
   updateTurf,
 } = require("../services/turf.service");
+const { getAllSchedules } = require("../services/schedule.service");
 
 module.exports = {
   GetAllTurfs: async (req, res, next) => {
@@ -17,6 +18,7 @@ module.exports = {
         responseHelper.success(res, "Success", turfs);
       }
     } catch (error) {
+      console.log(error);
       next(error);
     }
   },
@@ -66,6 +68,19 @@ module.exports = {
         );
         return;
       }
+    } catch (error) {
+      next(error);
+    }
+  },
+
+  GetSchedulesByTurfId: async (req, res, next) => {
+    try {
+      const id = req.params.id;
+      const schedules = await getAllSchedules({
+        turf_id: id,
+        date: { $gte: new Date() },
+      });
+      responseHelper.success(res, "Success", schedules);
     } catch (error) {
       next(error);
     }
