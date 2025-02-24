@@ -12,6 +12,7 @@ const adminRouter = require("./src/routes/admin.router");
 const scheduleRouter = require("./src/routes/schedule.router");
 const turfAdminRouter = require("./src/routes/turf-admin.router");
 const bookingsRouter = require("./src/routes/bookings.router");
+const userRouter = require("./src/routes/user.router");
 
 const app = express();
 app.use(express.json());
@@ -23,9 +24,9 @@ app.use("/api/admin", adminRouter);
 app.use("/api/schedule", scheduleRouter);
 app.use("/api/turf-admin", turfAdminRouter);
 app.use("/api/bookings", bookingsRouter);
+app.use("/api/user", userRouter);
 
 app.use(errorHandler);
-
 connectDB();
 app.get("/", (req, res) => {
   res.json({ msg: "Hello World!" });
