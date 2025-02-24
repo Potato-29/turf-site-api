@@ -31,11 +31,15 @@ module.exports = {
         return;
       }
 
-      const { email, created_at, _id } = user;
+      const { full_name, email, created_at, _id } = user;
 
-      const token = jwt.sign({ email, created_at, _id }, process.env.JWT_KEY, {
-        expiresIn: "1h",
-      });
+      const token = jwt.sign(
+        { full_name, email, created_at, _id },
+        process.env.JWT_KEY,
+        {
+          expiresIn: "1h",
+        }
+      );
 
       responseHelper.success(res, "Success", token);
     } catch (error) {

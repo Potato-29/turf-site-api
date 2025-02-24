@@ -22,7 +22,7 @@ const insertManySchedules = async (payload) => {
   return await schedules;
 };
 
-const update = async (id, data) => {
+const updateSchedule = async (id, data) => {
   return await Schedule.findByIdAndUpdate(id, data, { new: true });
 };
 
@@ -35,6 +35,6 @@ module.exports = {
   getById,
   createSchedule,
   insertManySchedules,
-  update,
+  updateSchedule,
   remove,
 };

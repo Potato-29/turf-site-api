@@ -2,6 +2,10 @@ const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
   // Define your schema fields here
+  full_name: {
+    type: String,
+    required: true,
+  },
   email: {
     type: String,
     required: true,

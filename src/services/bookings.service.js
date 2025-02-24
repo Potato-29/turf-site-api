@@ -8,9 +8,9 @@ const getBookingsById = async (id) => {
   return await Booking.findById(id);
 };
 
-const insertBooking = async (data) => {
+const insertBooking = async (data, session) => {
   const newbookings = new Booking(data);
-  return await newbookings.save();
+  return await newbookings.save({ session });
 };
 
 const updateBooking = async (id, data) => {

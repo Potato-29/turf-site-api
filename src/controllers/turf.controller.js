@@ -75,10 +75,14 @@ module.exports = {
 
   GetSchedulesByTurfId: async (req, res, next) => {
     try {
+      const currentDate = new Date(
+        new Date().setUTCHours(0, 0, 0, 0)
+      ).toISOString();
+
       const id = req.params.id;
       const schedules = await getAllSchedules({
         turf_id: id,
-        date: { $gte: new Date() },
+        date: { $gte: currentDate },
       });
       responseHelper.success(res, "Success", schedules);
     } catch (error) {
