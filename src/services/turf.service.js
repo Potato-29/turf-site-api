@@ -4,7 +4,7 @@ const getAll = async () => {
   return await Turf.find();
 };
 
-const getById = async (id) => {
+const getTurfById = async (id) => {
   return await Turf.findById(id);
 };
 
@@ -23,7 +23,7 @@ const remove = async (id) => {
 
 module.exports = {
   getAll,
-  getById,
+  getTurfById,
   createTurf,
   updateTurf,
   remove,

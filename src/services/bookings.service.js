@@ -8,6 +8,10 @@ const getBookingsById = async (id) => {
   return await Booking.findById(id);
 };
 
+const getBookingsByUserId = async (id) => {
+  return await Booking.find({ user_id: id });
+};
+
 const insertBooking = async (data, session) => {
   const newbookings = new Booking(data);
   return await newbookings.save({ session });
@@ -27,4 +31,5 @@ module.exports = {
   insertBooking,
   updateBooking,
   removeBooking,
+  getBookingsByUserId,
 };

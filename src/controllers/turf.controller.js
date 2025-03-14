@@ -3,7 +3,7 @@ const Turf = require("../models/turf.model");
 const {
   getAll,
   createTurf,
-  getById,
+  getTurfById,
   updateTurf,
 } = require("../services/turf.service");
 const { getAllSchedules } = require("../services/schedule.service");
@@ -13,7 +13,6 @@ module.exports = {
     try {
       const turfs = await getAll();
       const docs = await Turf.countDocuments();
-      console.log(turfs, docs);
       if (turfs) {
         responseHelper.success(res, "Success", turfs);
       }
@@ -26,7 +25,7 @@ module.exports = {
   GetById: async (req, res, next) => {
     try {
       const id = req.params.id;
-      const turf = await getById(id);
+      const turf = await getTurfById(id);
 
       responseHelper.success(res, "Success", turf);
     } catch (error) {

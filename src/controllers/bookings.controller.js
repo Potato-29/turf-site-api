@@ -1,29 +1,19 @@
 const responseHelper = require("../helpers/http-responses");
 const Schedule = require("../models/schedule.model");
-const mongoose = require("mongoose");
 const {
-  getAllBookings,
-  getBookingsById,
   insertBooking,
-  updateBooking,
-  removeBooking,
+  getBookingsByUserId,
 } = require("../services/bookings.service");
-const { updateSchedule } = require("../services/schedule.service");
+const { getTurfById } = require("../services/turf.service");
 
 module.exports = {
-  GetAll: async (req, res, next) => {
+  GetUserBookings: async (req, res, next) => {
     try {
-      responseHelper.success(res, "Success", null);
-    } catch (error) {
-      next(error);
-    }
-  },
+      const bookings = await getBookingsByUserId(req.params.id);
 
-  GetById: async (req, res, next) => {
-    try {
-      const id = req.params.id;
-      responseHelper.success(res, "Success", null);
+      responseHelper.success(res, "Bookings fetched successfully", bookings);
     } catch (error) {
+      console.log(error);
       next(error);
     }
   },
@@ -61,8 +51,13 @@ module.exports = {
         responseHelper.serverError(res, "Failed to book!", null);
         return;
       }
+      let payload = { ...req.body };
 
-      const booking = await insertBooking(req.body);
+      const turfInfo = await getTurfById(req.body.turf_id);
+      payload.turfInfo = turfInfo;
+      payload.scheduleInfo = schedule;
+
+      const booking = await insertBooking(payload);
       if (booking) {
         responseHelper.created(res, "Created successfully", null);
       }

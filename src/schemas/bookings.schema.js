@@ -1,18 +1,27 @@
 const mongoose = require("mongoose");
+const TurfSchema = require("./turf.schema");
+const ScheduleSchema = require("./schedule.schema");
 
 const bookingsSchema = new mongoose.Schema({
-  turf_id: {
-    type: String,
-    required: true,
+  // turf_id: {
+  //   type: String,
+  //   required: true,
+  // },
+
+  turfInfo: {
+    type: TurfSchema,
+  },
+  scheduleInfo: {
+    type: ScheduleSchema,
   },
   user_id: {
     type: String,
     required: true,
   },
-  schedule_id: {
-    type: String,
-    required: true,
-  },
+  // schedule_id: {
+  //   type: String,
+  //   required: true,
+  // },
   start_time: {
     type: String,
     required: true,
@@ -57,6 +66,9 @@ const bookingsSchema = new mongoose.Schema({
   },
   payment_id: {
     type: String,
+  },
+  booking_date_time: {
+type: Date
   },
   created_at: {
     type: Date,
