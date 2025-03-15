@@ -11,19 +11,32 @@ const { getAllSchedules } = require("../services/schedule.service");
 module.exports = {
   GetAllTurfs: async (req, res, next) => {
     try {
+      const turfs = await getAll();
+      const docs = await Turf.countDocuments();
+      if (turfs) {
+        responseHelper.success(res, "Success", turfs);
+      }
+    } catch (error) {
+      console.log(error);
+      next(error);
+    }
+  },
+
+  GetAllTurfsByFilter: async (req, res, next) => {
+    try {
       let { search, range, min_rating, sort_by, page, limit } = req.query;
       page = parseInt(page);
       limit = parseInt(limit);
       let query = {
         filter: {},
         sort: {},
-        skip: (page - 1) * limit,
-        limit: limit,
+        skip: (page - 1) * limit || 0,
+        limit: limit || 5,
       };
       if (search) {
         query.filter.name = { $regex: search, $options: "i" };
       }
-      if (range !== "") {
+      if (range) {
         query.filter["price.hourly"] = {
           $gte: parseInt(range.split(",")[0]),
           $lte: parseInt(range.split(",")[1]),
@@ -32,7 +45,7 @@ module.exports = {
       if (parseInt(min_rating)) {
         query.filter.average_rating = { $gte: parseFloat(min_rating) };
       }
-      if (sort_by !== "") {
+      if (sort_by) {
         if (sort_by === "rating") {
           query.sort = { $sort: { average_rating: -1 } };
         } else {

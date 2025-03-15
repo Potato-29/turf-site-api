@@ -5,11 +5,13 @@ const {
   GetById,
   CreateTurf,
   CompleteTurfOnboarding,
+  GetAllTurfsByFilter,
   Delete,
   GetSchedulesByTurfId,
 } = require("../controllers/turf.controller");
 
 router.get("/", GetAllTurfs);
+router.get("/filter", GetAllTurfsByFilter);
 router.get("/:id", GetById);
 
 router.get("/:id/schedules", GetSchedulesByTurfId);
