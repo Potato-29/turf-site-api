@@ -1,7 +1,20 @@
 const Turf = require("../models/turf.model");
 
-const getAll = async () => {
-  return await Turf.find();
+const getAll = async (query) => {
+  if (query) {
+    return await Turf.aggregate([
+      {
+        $match: {
+          ...query?.filter,
+        },
+      },
+      { ...query?.sort },
+      { $skip: query.skip },
+      { $limit: query.limit },
+    ]);
+  } else {
+    return await Turf.find();
+  }
 };
 
 const getTurfById = async (id) => {
